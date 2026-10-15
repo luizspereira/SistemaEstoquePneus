@@ -1,15 +1,19 @@
 package modelo;
 
 public class Pneu {
-    public String marca;
-    public int aro;
-    public int quantidade;
-    public double preco;
+    private  String marca;
+    private  int aro;
+    private  int quantidade;
+    private double preco;
     public Pneu(String marca, int aro, int quantidade, double preco) {
         this.marca = marca;
         this.aro = aro;
         this.quantidade = quantidade;
         this.preco = preco;
+    }
+
+        public int getQuantidade() {
+            return this.quantidade;
     }
     public void vender(int quantidadeVendida) {
         if (quantidadeVendida <= this.quantidade) {
