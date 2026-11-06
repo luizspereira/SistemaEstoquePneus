@@ -47,10 +47,10 @@ public class Main {
     private static void exibirMenu() {
         System.out.println("\n--- Sistema de Estoque de Pneus ---");
         System.out.println("1 - Cadastrar pneu");
-        System.out.println("2 - Listar estoque");
-        System.out.println("3 - Buscar por marca");
-        System.out.println("4 - Vender pneus");
-        System.out.println("5 - Repor estoque");
+        System.out.println("2 - Listar pneus");
+        System.out.println("3 - Buscar pneu por marca");
+        System.out.println("4 - Vender pneu");
+        System.out.println("5 - Adicionar estoque");
         System.out.println("6 - Sair");
     }
 
