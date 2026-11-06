@@ -25,17 +25,20 @@ public class Main {
                         listarPneus(estoque);
                         break;
                     case 3:
-                        venderPneu(scanner, estoque);
+                        buscarPorMarca(scanner, estoque);
                         break;
                     case 4:
-                        adicionarEstoque(scanner, estoque);
+                        venderPneu(scanner, estoque);
                         break;
                     case 5:
+                        adicionarEstoque(scanner, estoque);
+                        break;
+                    case 6:
                         executando = false;
                         System.out.println("Programa encerrado.");
                         break;
                     default:
-                        System.out.println("Opção inválida. Escolha uma opção de 1 a 5.");
+                        System.out.println("Opção inválida. Escolha uma opção de 1 a 6.");
                 }
             }
         }
@@ -44,10 +47,11 @@ public class Main {
     private static void exibirMenu() {
         System.out.println("\n--- Sistema de Estoque de Pneus ---");
         System.out.println("1 - Cadastrar pneu");
-        System.out.println("2 - Listar pneus");
-        System.out.println("3 - Vender pneu");
-        System.out.println("4 - Adicionar estoque");
-        System.out.println("5 - Sair");
+        System.out.println("2 - Listar estoque");
+        System.out.println("3 - Buscar por marca");
+        System.out.println("4 - Vender pneus");
+        System.out.println("5 - Repor estoque");
+        System.out.println("6 - Sair");
     }
 
     private static void cadastrarPneu(Scanner scanner, Estoque estoque) {
@@ -62,13 +66,23 @@ public class Main {
     }
 
     private static void listarPneus(Estoque estoque) {
-        List<Pneu> pneus = estoque.listar();
+        exibirPneus(estoque.listar(), "Estoque", "Nenhum pneu cadastrado.");
+    }
+
+    private static void buscarPorMarca(Scanner scanner, Estoque estoque) {
+        String marca = lerTexto(scanner, "Marca para buscar: ");
+        List<Pneu> pneus = estoque.buscarPorMarca(marca);
+        exibirPneus(pneus, "Resultados para a marca \"" + marca + "\"",
+                "Nenhum pneu encontrado para essa marca.");
+    }
+
+    private static void exibirPneus(List<Pneu> pneus, String titulo, String mensagemVazia) {
         if (pneus.isEmpty()) {
-            System.out.println("Nenhum pneu cadastrado.");
+            System.out.println(mensagemVazia);
             return;
         }
 
-        System.out.println("\n--- Pneus cadastrados ---");
+        System.out.println("\n--- " + titulo + " ---");
         for (int i = 0; i < pneus.size(); i++) {
             Pneu pneu = pneus.get(i);
             System.out.printf("%d - Marca: %s | Aro: %d | Quantidade: %d | Preço: %.2f%n",
