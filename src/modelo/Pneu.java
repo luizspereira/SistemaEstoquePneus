@@ -1,16 +1,26 @@
 package modelo;
 
+import java.util.concurrent.atomic.AtomicLong;
+
 public class Pneu {
+    private static final AtomicLong PROXIMO_CODIGO = new AtomicLong(1);
+
+    private final long codigo;
     private String marca;
     private int aro;
     private int quantidade;
     private double preco;
 
     public Pneu(String marca, int aro, int quantidade, double preco) {
+        this.codigo = PROXIMO_CODIGO.getAndIncrement();
         this.marca = marca;
         this.aro = aro;
         this.quantidade = quantidade;
         this.preco = preco;
+    }
+
+    public long getCodigo() {
+        return this.codigo;
     }
 
     public String getMarca() {

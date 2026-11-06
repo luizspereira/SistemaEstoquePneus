@@ -3,6 +3,7 @@ package modelo;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 public class Estoque {
     private final ArrayList<Pneu> pneus = new ArrayList<>();
@@ -10,6 +11,9 @@ public class Estoque {
     public void cadastrar(Pneu pneu) {
         if (pneu == null) {
             throw new IllegalArgumentException("O pneu não pode ser nulo.");
+        }
+        if (pneus.contains(pneu)) {
+            throw new IllegalArgumentException("O pneu já está cadastrado neste estoque.");
         }
 
         pneus.add(pneu);
@@ -32,6 +36,20 @@ public class Estoque {
         }
 
         return Collections.unmodifiableList(encontrados);
+    }
+
+    public Optional<Pneu> buscarPorCodigo(long codigo) {
+        if (codigo < 1) {
+            throw new IllegalArgumentException("O código deve ser maior que zero.");
+        }
+
+        for (Pneu pneu : pneus) {
+            if (pneu.getCodigo() == codigo) {
+                return Optional.of(pneu);
+            }
+        }
+
+        return Optional.empty();
     }
 
     public void vender(Pneu pneu, int quantidade) {

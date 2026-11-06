@@ -5,8 +5,10 @@ Aplicação de console em Java para cadastrar pneus e controlar as quantidades d
 ## Funcionalidades
 
 - Cadastrar pneus informando marca, aro, quantidade inicial e preço.
-- Listar os pneus cadastrados e seus dados.
+- Atribuir automaticamente um código único a cada pneu.
+- Listar os pneus cadastrados, seus códigos e demais dados.
 - Buscar pneus pela marca, sem diferenciar maiúsculas de minúsculas.
+- Buscar um pneu pelo código.
 - Vender uma quantidade de um pneu selecionado, respeitando o estoque disponível.
 - Repor unidades no estoque de um pneu.
 - Validar entradas no console, incluindo valores numéricos e campos obrigatórios.
@@ -55,4 +57,4 @@ Em seguida, inicie a aplicação:
 java -cp out aplicacao.Main
 ```
 
-O menu oferece opções para cadastrar pneus, listar o estoque, buscar por marca, vender, repor o estoque e sair. Para vender ou repor, escolha o pneu pelo número exibido na lista.
+O menu oferece opções para cadastrar pneus, listar o estoque, buscar por marca ou código, vender, repor o estoque e sair. Para vender ou repor, escolha o pneu pelo número exibido na lista; o código único também aparece junto aos dados de cada pneu.

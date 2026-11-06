@@ -4,6 +4,7 @@ import modelo.Estoque;
 import modelo.Pneu;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Scanner;
 
 public class Main {
@@ -28,17 +29,20 @@ public class Main {
                         buscarPorMarca(scanner, estoque);
                         break;
                     case 4:
-                        venderPneu(scanner, estoque);
+                        buscarPorCodigo(scanner, estoque);
                         break;
                     case 5:
-                        adicionarEstoque(scanner, estoque);
+                        venderPneu(scanner, estoque);
                         break;
                     case 6:
+                        adicionarEstoque(scanner, estoque);
+                        break;
+                    case 7:
                         executando = false;
                         System.out.println("Programa encerrado.");
                         break;
                     default:
-                        System.out.println("Opção inválida. Escolha uma opção de 1 a 6.");
+                        System.out.println("Opção inválida. Escolha uma opção de 1 a 7.");
                 }
             }
         }
@@ -49,9 +53,10 @@ public class Main {
         System.out.println("1 - Cadastrar pneu");
         System.out.println("2 - Listar pneus");
         System.out.println("3 - Buscar pneu por marca");
-        System.out.println("4 - Vender pneu");
-        System.out.println("5 - Adicionar estoque");
-        System.out.println("6 - Sair");
+        System.out.println("4 - Buscar pneu por código");
+        System.out.println("5 - Vender pneu");
+        System.out.println("6 - Adicionar estoque");
+        System.out.println("7 - Sair");
     }
 
     private static void cadastrarPneu(Scanner scanner, Estoque estoque) {
@@ -76,6 +81,17 @@ public class Main {
                 "Nenhum pneu encontrado para essa marca.");
     }
 
+    private static void buscarPorCodigo(Scanner scanner, Estoque estoque) {
+        long codigo = lerLong(scanner, "Código do pneu: ", 1);
+        Optional<Pneu> resultado = estoque.buscarPorCodigo(codigo);
+        if (resultado.isPresent()) {
+            exibirPneus(List.of(resultado.get()), "Pneu encontrado",
+                    "Nenhum pneu encontrado para esse código.");
+        } else {
+            System.out.println("Nenhum pneu encontrado para esse código.");
+        }
+    }
+
     private static void exibirPneus(List<Pneu> pneus, String titulo, String mensagemVazia) {
         if (pneus.isEmpty()) {
             System.out.println(mensagemVazia);
@@ -85,8 +101,8 @@ public class Main {
         System.out.println("\n--- " + titulo + " ---");
         for (int i = 0; i < pneus.size(); i++) {
             Pneu pneu = pneus.get(i);
-            System.out.printf("%d - Marca: %s | Aro: %d | Quantidade: %d | Preço: %.2f%n",
-                    i + 1, pneu.getMarca(), pneu.getAro(),
+            System.out.printf("%d - Código: %d | Marca: %s | Aro: %d | Quantidade: %d | Preço: %.2f%n",
+                    i + 1, pneu.getCodigo(), pneu.getMarca(), pneu.getAro(),
                     pneu.getQuantidade(), pneu.getPreco());
         }
     }
@@ -121,8 +137,9 @@ public class Main {
         System.out.println("\nSelecione o pneu:");
         for (int i = 0; i < pneus.size(); i++) {
             Pneu pneu = pneus.get(i);
-            System.out.printf("%d - %s | Aro: %d | Quantidade: %d%n",
-                    i + 1, pneu.getMarca(), pneu.getAro(), pneu.getQuantidade());
+            System.out.printf("%d - Código: %d | %s | Aro: %d | Quantidade: %d%n",
+                    i + 1, pneu.getCodigo(), pneu.getMarca(),
+                    pneu.getAro(), pneu.getQuantidade());
         }
 
         int indice = lerInteiro(scanner, "Número do pneu: ", 1);
@@ -152,6 +169,21 @@ public class Main {
             System.out.print(mensagem);
             try {
                 int valor = Integer.parseInt(scanner.nextLine().trim());
+                if (valor >= minimo) {
+                    return valor;
+                }
+                System.out.println("Informe um número inteiro maior ou igual a " + minimo + ".");
+            } catch (NumberFormatException e) {
+                System.out.println("Entrada inválida. Informe um número inteiro.");
+            }
+        }
+    }
+
+    private static long lerLong(Scanner scanner, String mensagem, long minimo) {
+        while (true) {
+            System.out.print(mensagem);
+            try {
+                long valor = Long.parseLong(scanner.nextLine().trim());
                 if (valor >= minimo) {
                     return valor;
                 }
